@@ -33,8 +33,17 @@
 						<td>Email</td>
 						<td><?php echo $_SESSION['email']; ?></td>
 					</tr>
+					<tr>
+						<td>Given name</td>
+						<td><?php echo $_SESSION['givenName']; ?></td>
+					</tr>
+					<tr>
+						<td>Family name</td>
+						<td><?php echo $_SESSION['familyName']; ?></td>
+					</tr>
 				</tbody>
 			</table>
+			<br><a href="logout.php">logout</a>
 		</div>
 	</div>
 </div>
