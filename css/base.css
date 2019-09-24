@@ -3,7 +3,7 @@
 }
 
 .bgcolor{
-    color: #8f8f8f;
+    color: black;
 }
 
 .loginimage{
@@ -13,4 +13,11 @@
 
 .white{
     color: white;
+}
+
+.nodec{
+    text-decoration: none !important;
+}
+.nodec:hover{
+    color: white !important;
 }

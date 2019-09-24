@@ -26,13 +26,14 @@
 
                 <img src="images/logo.png" class="loginimage"><br><br>
 
-                <form  action="/login_process.php" method="post">
+                <form  action="/register_process.php" method="post">
                     <input placeholder="Name..." name="name" class="form-control"><br>
                     <input placeholder="Surname..." name="surname" class="form-control"><br>
                     <input placeholder="Email..." name="email" class="form-control"><br>
+                    <input placeholder="Date of birth..." type="date" name="datum_r" class="form-control"><br>
                     <input type="password" placeholder="Password..." name="password" class="form-control"><br>
                     <input type="password" placeholder=" Retype Password..." name="repassword" class="form-control"><br>
-                    <input type="submit" value="Log In" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary"><a href="login.php" class="white nodec">Login</a></button>
                     <input type="submit" value="register" class="btn btn-primary">
                     <input type="button" onclick="window.location = '<?php echo $loginURL ?>';" value="Log In With Google" class="btn btn-danger">   
                 </form>

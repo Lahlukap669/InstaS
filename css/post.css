@@ -1,0 +1,14 @@
+.post{
+    margin-left:10%;
+    height: 75%;
+    width: 50%;
+    float: left;
+}
+
+.chat{
+    margin-left:5%;
+    height: 75%;
+    width: 25%;
+    margin-right:10%;
+    float: right;
+}

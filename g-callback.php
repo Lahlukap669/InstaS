@@ -18,13 +18,14 @@
 	//echo "<br><br>";
 	
 
-	$_SESSION["id"] = $userData['id'];
+	$_SESSION["gid"] = $userData['id'];
 	$_SESSION['email'] = $userData['email'];
 	$_SESSION['picture'] = $userData['picture'];
 	$_SESSION['familyName'] = $userData['familyName'];
 	$_SESSION['givenName'] = $userData['givenName'];
-	$_SESSION['name'] = $userData['name'];
-	header('Location: index.php');
+	$_SESSION['date'] = $userData['birthday'];
+	
+	header('Location: api_login.php');
 
 
 ?>
