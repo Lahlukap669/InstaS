@@ -9,13 +9,13 @@ $target_dir = "uploads/";
 $slika = $target_dir.$now.$_FILES["fileToUpload"]["name"];
 
 $result = mysqli_query($con,"INSERT INTO posts (naslov, opis, slika_url, user_id) VALUES ('$title', '$des', '$slika', (SELECT id FROM users WHERE email='$username'))")
-                or die(mysqli_error());
+                or die(mysqli_error($con));
 
     /*if(!mysql_num_rows($result)){
         $message = "your email isn't registerd yet!";
     }*/
     $_SESSION['error'] = mysqli_error($con);
-
+echo $_SESSION['error'];
 $_FILES["fileToUpload"]["name"] = $now.$_FILES["fileToUpload"]["name"];
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;

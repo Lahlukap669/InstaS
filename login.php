@@ -10,7 +10,7 @@
     /*if ($_SESSION["error"]!=""){
         echo '<script type="text/javascript">alert('.$_SESSION["error"].');</script>';
     }*/
-    echo $_SESSION["error"];
+    //echo $_SESSION["error"];
 
 	$loginURL = $gClient->createAuthUrl();
 ?>
