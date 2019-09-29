@@ -1,13 +1,3 @@
-<?php
-include_once("database.php");
-function result($src){
-    $result = mysqli_query($con,"SELECT ime, priimek FROM users WHERE ime='%$src%' or priimek='%$src%'") or die(mysqli_error($con));
-    $all = mysqli_fetch_all($result);
-    foreach($all as &$i){            
-        $_REQUEST['search'] = $i[0]." ".$i[1];  
-    }
-mysqli_close($con);}
-?>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="css/head.css">
@@ -25,8 +15,10 @@ mysqli_close($con);}
     <a class="navbar-brand" href="index.php"><img src="images/homeh.png"></a>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
+        <form id="searchForm" action="search.php" method="post">
             <input class="nav-link" type=text name="search" id="search" placeholder="Search">
-            <p id="search-output"></p>
+            <input id="submitForm" type="submit" style="display: none;">
+        </form>
         </li>
         <li class="nav-item">
             <a class="nav-link products" href="discover.php"><img src="images/discoverh.png"></a>
@@ -43,20 +35,7 @@ mysqli_close($con);}
     </ul>
 </div>
 </nav>
-        <!--<div class="menu">
-            <form>
-                <ul>
-                    <li><a href="index.php" class="home"><img src="images/homeh.png"></a></li>
-                    <li><input type=text name="search" id="search" placeholder="Search"></li>
-                    <li><a href="discover.php" class="products"><img src="images/discoverh.png"></a></li>
-                    <li class="showhim"><img src="images/trackingh.png"><img class="showme" src="images/trackingp.png"></li>
-                    <li><a href="profile.php" class="form"><img src="images/profileh.png"></a></li>
-                    <li><a href="edit.php" class="products">edit</a></li>
-                </ul>
-            </form>
-        </div>-->
-        
-    </body>
+</body>
    
 </html>
 <script>
@@ -90,20 +69,6 @@ mysqli_close($con);}
 })(jQuery);
 
 $('#search').donetyping(function(){
-    var x = $('#search').value;
-    type: "POST",
-    url: 'head.php',
-    dataType: 'json',
-    data: {functionname: 'result', arguments: [x]},
-
-    success: function (obj, textstatus) {
-                  if( !('error' in obj) ) {
-                      yourVariable = obj.result;
-                  }
-                  else {
-                      console.log(obj.error);
-                  }
-            }
-  //$('#search-output').text(new Date().toUTCString());
+  $('#searchForm').submit();//text('Event last fired @ ' + (new Date().toUTCString()));
 });
-	</script>
+</script>
