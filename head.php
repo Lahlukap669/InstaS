@@ -1,42 +1,47 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="css/head.css">
-        <link rel="shortcut icon" type="image/png" href="images/logo-title.png"/>
+<!-- <link rel="stylesheet" type="text/css" href="css/head.css"> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/head.css">
+<!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800|Roboto:100,400,900|Satisfy&display=swap" rel="stylesheet">
     </head>
+<!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/196e2f7040.js" crossorigin="anonymous"></script>
 
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light light">
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="false" aria-label="Tooglenavigation">
-<span class="navbar-toggler-icon"></span></button>
+<body>
+  <div class="container">
+  <nav class="navbar navbar-expand-lg navbar-black bg-white">
 
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <a class="navbar-brand" href="index.php"><img src="images/homeh.png"></a>
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-        <form id="searchForm" action="search.php" method="post">
-            <input class="nav-link" type=text name="search" id="search" placeholder="Search">
-            <input id="submitForm" type="submit" style="display: none;">
-        </form>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link products" href="discover.php"><img src="images/discoverh.png"></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link products" href="discover.php"><img class="nav-link" src="images/trackingh.png"></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link form" href="profile.php"><img src="images/profileh.png"></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link products" href="edit.php">edit</a>
-        </li>
-    </ul>
-</div>
-</nav>
-</body>
-   
+		 <a class="navbar-brand" href="index.php">
+       <img src="images/brand-logo.png" class="d-inline-block align-top brand-img" alt="">
+       InstaS</a>
+       <form id="searchForm" action="search.php" method="post" class="form-inline">
+         <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
+       </form>
+
+
+		 <button class="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
+					<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+					<ul class="navbar-nav ml-auto">
+							<li class="nav-item">
+									<a class="nav-link" href=""><i class="far fa-compass navbar-icon"></i></a>
+							</li>
+							<li class="nav-item">
+									<a class="nav-link" href=""><i class="far fa-heart navbar-icon"></i></a>
+							</li>
+							<li class="nav-item">
+									<a class="nav-link" href=""><i class="far fa-user navbar-icon"></i></a>
+							</li>
+					</ul>
+			</div>
+    </div>
+	</nav>
 </html>
 <script>
 //https://stackoverflow.com/questions/14042193/how-to-trigger-an-event-in-input-text-after-i-stop-typing-writing/28695011
@@ -69,6 +74,6 @@
 })(jQuery);
 
 $('#search').donetyping(function(){
-  $('#searchForm').submit();//text('Event last fired @ ' + (new Date().toUTCString()));
+  $('#searchForm').submit();
 });
 </script>

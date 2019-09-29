@@ -1,14 +1,50 @@
-.post{
-    margin-left:10%;
-    height: 75%;
-    width: 50%;
-    float: left;
+#posts {
+  background-color: #fafafa;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+
 }
 
-.chat{
-    margin-left:5%;
-    height: 75%;
-    width: 25%;
-    margin-right:10%;
-    float: right;
+/* User Icons */
+.post-user-icon {
+  border-radius: 50%;
+  margin: 1rem;
+  width: 32px;
+  height: 32px;
+}
+.post-user-icon-lg {
+  border-radius: 50%;
+  margin: 1rem;
+  width: 40px;
+  height: 40px;
+}
+/* Left Post Container */
+.post-div-header-left {
+  border: 0.7px #e6e6e6 solid;
+  margin: 3rem 5rem 0;
+}
+.post-div-header-right {
+    border: 0.7px #e6e6e6 solid;
+}
+.post-user-link{
+  color: black;
+}
+.post-user-link:hover {
+  text-decoration: none;
+  color: #45454d;
+}
+.post-div-img {
+  margin: 0 5rem;
+}
+.post-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+/* Right Post Container */
+.side-post-div{
+  border: 0.7px #e6e6e6 solid;
+  margin: 3rem 1rem 0.5rem;
+}
+.side-post-div-img{
+  display: inline-block;
 }

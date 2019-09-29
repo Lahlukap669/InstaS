@@ -5,6 +5,16 @@
 		header('Location: login.php');
 		exit;
 	}
+	if(isset($_GET['id'])){
+		$id = $_GET['id'];
+		include_once('database.php');
+		$result = mysqli_query($con,"SELECT email FROM users WHERE id='$id'") or die(mysqli_error($con));
+		$row = mysqli_fetch_array($result);
+		$username = $row['email'];
+	}
+	else{
+		$username = $_SESSION['user'];
+	}
 ?>
 
 <!doctype html>
@@ -21,9 +31,7 @@
 	<div class="container" style="margin-top: 30px">
 	
 <?php
-	include("database.php");
 	include_once("head.php");
-	$username = $_SESSION['user'];
 	
 	$result = mysqli_query($con,"SELECT p.naslov, p.slika_url, p.opis FROM users u INNER JOIN posts p ON u.id=p.user_id WHERE u.email='$username';") 
 				or die(mysqli_error($con));
@@ -37,7 +45,8 @@
 	foreach($all as &$i){
         //$slika = $i[1];
         echo "<div id='profile-post'>".$i[0]."<br><img id='post-img' src='".$i[1]."'><br>".$i[2]."</div>";
-    }
+	}
+	mysqli_close($con);
 ?>
 
 		<br><a href="logout.php">logout</a>
