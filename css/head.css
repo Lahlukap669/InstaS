@@ -15,6 +15,9 @@
 .navbar-icon:hover {
   color: #5d5d5d;
 }
+.button {
+  font-size: 1.5rem;
+}
 .navbar {
   border-bottom: 1px #eeeeee solid;
   border-bottom-width: 100%;

@@ -1,14 +1,18 @@
 <?php
 include_once("database.php");
-$cur_user = $_SESSION['user'];
 $title = $_POST['title'];
 $des = $_POST['des'];
 $username = $_SESSION['user'];
 $now = date("Y-m-d")."_".date("H:i:s")."_";
-$target_dir = "uploads/";
+$target_dir = "./uploads/";
 $slika = $target_dir.$now.$_FILES["fileToUpload"]["name"];
 
-$result = mysqli_query($con,"INSERT INTO posts (naslov, opis, slika_url, user_id) VALUES ('$title', '$des', '$slika', (SELECT id FROM users WHERE email='$username'))")
+$result = mysqli_query($con,"SELECT id FROM users WHERE email='$username'")
+                or die(mysqli_error($con));
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+$id = $row["id"];
+
+$result = mysqli_query($con,"INSERT INTO posts (filter_id, naslov, opis, slika_url, user_id) VALUES (1, '$title', '$des', '$slika', $id)")
                 or die(mysqli_error($con));
 
     /*if(!mysql_num_rows($result)){

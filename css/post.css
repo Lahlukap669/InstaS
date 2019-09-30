@@ -1,10 +1,34 @@
 #posts {
   background-color: #fafafa;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 600;
-
+  line-height: 1.5;
 }
+h3 {
+  margin: 1rem 1rem 0;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+/* Anchor tags */
 
+.post-user-link-right{
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  position: absolute;
+  bottom: 25px;
+}
+.post-user-link-left{
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  bottom: 25px;
+}
+.post-user-link-left:hover , .post-user-link-right:hover {
+  text-decoration: none;
+  color: #45454d;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+}
 /* User Icons */
 .post-user-icon {
   border-radius: 50%;
@@ -15,24 +39,19 @@
 .post-user-icon-lg {
   border-radius: 50%;
   margin: 1rem;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 }
 /* Left Post Container */
 .post-div-header-left {
   border: 0.7px #e6e6e6 solid;
+  border-bottom: 0;
   margin: 3rem 5rem 0;
 }
 .post-div-header-right {
     border: 0.7px #e6e6e6 solid;
 }
-.post-user-link{
-  color: black;
-}
-.post-user-link:hover {
-  text-decoration: none;
-  color: #45454d;
-}
+
 .post-div-img {
   margin: 0 5rem;
 }
@@ -40,11 +59,104 @@
   max-width: 100%;
   max-height: 100%;
 }
-/* Right Post Container */
-.side-post-div{
+.post-div-likes{
   border: 0.7px #e6e6e6 solid;
-  margin: 3rem 1rem 0.5rem;
+  margin: 0 5rem;
+  padding: 0.5rem 0;
 }
+.buttons {
+  margin: 0 3%;
+}
+.button {
+  font-size: 1.5rem;
+}
+.bookmark {
+  float: right;
+}
+/* Right Post Container
+.right-container {
+
+}*/
+.side-post-div-header{
+  margin: 3rem 1rem 0;
+}
+.side-post-div {
+    border: 0.7px #e6e6e6 solid;
+    margin: 1rem 1rem 0;
+}
+
+/* Right Division Header */
+.side-post-div-header{
+  margin: 3rem 1rem 0;
+}
+
 .side-post-div-img{
-  display: inline-block;
+    display: inline-block;
+    position: relative;
+}
+.post-user-name-top {
+  font-family: "Roboto";
+  font-weight: 100;
+  font-size: 0.8rem;
+  position: relative;
+  top: 10px;
+}
+/* Stories */
+
+.story-upload-time {
+  font-family: "Roboto";
+  font-weight: 100;
+  font-size: 0.6rem;
+  position: relative;
+  top: 10px;
+  color: #45454d;
+}
+
+
+.post-user-link-right-bottom{
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 23px;
+}
+.post-user-link-right-bottom:hover{
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 23px;
+  text-decoration: none;
+  color: #45454d;
+}
+/* Right Division Stories */
+
+@media (max-width: 995px){
+  .right-container{
+    display: none;
+  }
+}
+
+a {
+  color:black;
+}
+
+.plus{
+  width: 4%;
+  height: auto;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  left: 20px;
+  bottom: 20px;
+}
+
+.plus:hover{
+  -o-transition:.3s;
+  -ms-transition:.3s;
+  -moz-transition:.3s;
+  -webkit-transition:.3s;
+  transition:.3s;
+  width: 4.3%;
+  height: auto;
 }

@@ -33,7 +33,7 @@
 
                 <img src="images/logo.png" class="loginimage"><br><br>
 
-                <form  action="/login_process.php" method="post">
+                <form  action="./login_process.php" method="post">
                     <input placeholder="Email..." name="email" class="form-control"><br>
                     <input type="password" placeholder="Password..." name="password" class="form-control"><br>
                     <input type="submit" value="Log In" class="btn btn-primary">

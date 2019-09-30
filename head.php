@@ -20,8 +20,6 @@
        <form id="searchForm" action="search.php" method="post" class="form-inline">
          <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
        </form>
-
-
 		 <button class="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
 					<span class="navbar-toggler-icon"></span>
 			</button>
@@ -30,13 +28,13 @@
 
 					<ul class="navbar-nav ml-auto">
 							<li class="nav-item">
-									<a class="nav-link" href=""><i class="far fa-compass navbar-icon"></i></a>
+									<a class="nav-link" href="./discover.php"><i class="far fa-compass navbar-icon button"></i></a>
 							</li>
 							<li class="nav-item">
-									<a class="nav-link" href=""><i class="far fa-heart navbar-icon"></i></a>
+									<a class="nav-link" href="#"><i class="far fa-heart navbar-icon button"></i></a>
 							</li>
 							<li class="nav-item">
-									<a class="nav-link" href=""><i class="far fa-user navbar-icon"></i></a>
+									<a class="nav-link" href="./profile.php"><i class="far fa-user navbar-icon button"></i></a>
 							</li>
 					</ul>
 			</div>
