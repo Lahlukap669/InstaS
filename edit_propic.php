@@ -5,19 +5,7 @@ include_once("head.php");
 <html>
 <body>
 
-<form action="upload_process.php" method="post" enctype="multipart/form-data">
-
-<div class="input-group scale60 posc">
-  <div class="custom-file">
-  <input type="text" id="title" placeholder="title" name="title" class="form-control custom-file-label" required>
-  </div>
-</div>
-
-<div class="input-group scale60 posc">
-  <div class="custom-file">
-  <input type="text" placeholder="Description..." name="des" class="form-control custom-file-label" required>
-  </div>
-</div>
+<form action="edit_propic_process.php" method="post" enctype="multipart/form-data">
 
 <div class="input-group scale60 posc">
   <div class="input-group-prepend">

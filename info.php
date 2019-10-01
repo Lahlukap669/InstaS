@@ -27,22 +27,28 @@
 				<tbody>
 					<tr>
 						<td>ID</td>
-						<td><?php echo $_SESSION['id']; ?></td>
+						<td><?php if(isset($_SESSION['gid'])){echo $_SESSION['gid'];} ?></td>
 					</tr>
 					<tr>
 						<td>Email</td>
-						<td><?php echo $_SESSION['email']; ?></td>
+						<td><?php if(isset($_SESSION['email'])){ echo $_SESSION['email'];} ?></td>
 					</tr>
 					<tr>
-						<td>Given name</td>
-						<td><?php echo $_SESSION['givenName']; ?></td>
+						<td>Name</td>
+						<td><?php if(isset($_SESSION['givenName'])){ echo $_SESSION['givenName'];} ?></td>
 					</tr>
 					<tr>
-						<td>Family name</td>
-						<td><?php echo $_SESSION['familyName']; ?></td>
+						<td>Surname</td>
+						<td><?php if(isset($_SESSION['familyName'])){ echo $_SESSION['familyName'];} ?></td>
 					</tr>
+					<tr>
+						<td>Date of birth</td>
+						<td><?php if(isset($_SESSION['date'])){ echo $_SESSION['date'];} ?></td>
+					</tr>
+
 				</tbody>
 			</table>
+			<a href="edit_propic.php">edit profile picture</a>
 			<br><a href="logout.php">logout</a>
 		</div>
 	</div>

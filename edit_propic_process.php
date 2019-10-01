@@ -1,8 +1,6 @@
 <?php
 include_once("database.php");
 session_start();
-$title = $_POST['title'];
-$des = $_POST['des'];
 $username = $_SESSION['user'];
 $now = date("Y-m-d")."_".date("H:i:s")."_";
 $target_dir = "./uploads/";
@@ -13,8 +11,9 @@ $result = mysqli_query($con,"SELECT id FROM users WHERE email='$username';")
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $id = $row["id"];
 
-$result = mysqli_query($con,"INSERT INTO posts (filter_id, naslov, opis, slika_url, user_id) VALUES (1, '$title', '$des', '$slika', $id)")
-                or die(mysqli_error($con));
+$result = mysqli_query($con,"UPDATE users
+                        SET profile_picture = '$slika'
+                        WHERE id='$id';") or die(mysqli_error($con));
 
     /*if(!mysql_num_rows($result)){
         $message = "your email isn't registerd yet!";
@@ -60,11 +59,11 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-        header("Location: index.php");
+        header("Location: info.php");
         exit;
     } else {
         echo "Sorry, there was an error uploading your file.";
-        echo "<a href='upload.php'>Back</a>";
+        echo "<a href='edit_propic.php'>Back</a>";
     }
 }
 ?>

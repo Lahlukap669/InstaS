@@ -1,6 +1,6 @@
 <?php
 //LAJKI
-//komentarji --> do konca
+//all liked posts
 //CSS profile/upload/discover/info/search/edit
 //spremenit slike
 
@@ -9,7 +9,18 @@
 	  if (!isset($_SESSION['user'])) {
 	  	header('Location: login.php');
 	  	exit();
-	    }
+		}
+	/*function likes($p_id){
+			$user = $row['email'];
+			$result = mysqli_query($con,"SELECT id FROM users WHERE email='$user' LIMIT 1") 
+						or die("failed to query database");
+	
+			$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+			$l_u_id = $row["id"];
+	
+			mysqli_query($con,"INSERT INTO lajki (post_id, user_id) Values ('$l_u_id', '$p_id')")
+								or die("failed to query database"); 
+}*/
 ?>
 
 <!doctype html>
@@ -44,6 +55,11 @@
 			<?php
 	include_once("database.php");
 	$username = $_SESSION['user'];
+
+	$result = mysqli_query($con,"SELECT id FROM users WHERE email='$username' LIMIT 1") or die(mysqli_error($con));
+    $row = mysqli_fetch_array($result);
+	$id = $row['id'];
+	
 	$post = mysqli_query($con,"SELECT u.profile_picture, u.ime, u.priimek, p.slika_url, p.id, u.id FROM users u
 								INNER JOIN posts p ON  u.id=p.user_id
 								LEFT OUTER JOIN lajki l ON p.id=l.post_id
@@ -51,8 +67,14 @@
 								ORDER BY p.datum DESC") or die(mysqli_error($con). " errorcic ");
 	$all = mysqli_fetch_all($post);
 	
-    foreach($all as &$i){ 
-		echo '<div class="main-post-div">
+    foreach($all as &$i){
+		$f_id = $i[5];
+		$followed = mysqli_query($con,"SELECT followed_id FROM followers WHERE followed_id='$f_id' AND follower_id='$id'") or die(mysqli_error($con). " errorcic ");
+		$all1 = mysqli_fetch_all($followed);
+		foreach($all1 as &$a){
+			echo $a[0]." ".$i[5];
+			if($a[0]==$i[5]){
+				echo '<div class="main-post-div">
 				<div class="post-div-header-left">
 					<img  class="post-user-icon"src="'.$i[0].'" alt="user-picture">
 					<a class="post-user-link" href="profile.php?id='.$i[4].'">'.$i[1]." ".$i[2].'</a>	
@@ -61,16 +83,18 @@
 					<a href="post.php?id='.$i[4].'&name='.$i[1].$i[2].'"><img class="post-img" src="'.$i[3].'"></a>
 				</div>
 				<div class="post-div-likes">
-						<a href="like_process.php" class="buttons a_bl"><i class="far fa-heart button"></i></a>
+						<a id="like" href="" onclick="like_process.php?p_id='.$i[4].'" class="buttons a_bl"><i class="far fa-heart button"></i></a>
 						<a href="comments.php?p_id='.$i[4].'&u_id='.$i[5].'" class="buttons"><i class="far fa-comment button"></i></a>
-						<a href="#" class="buttons"><i class="far fa-share-square button"></i></a>
-						<a href="#" class="bookmark buttons"><i class="far fa-bookmark button"></i></a>
+						<a id="share" href="" onclick="clipboard();" class="buttons"><i class="far fa-share-square button"></i></a>
+						<a href="" class="bookmark buttons"><i class="far fa-bookmark button"></i></a>
 				</div>
 		</div>';         
         //echo '<a href="profile.php$id='.$i[4].'"><div><img src="'.$i[0].'"> '.$i[1]." ".$i[2].'</a><a href="post.php$id='.$i[4].'$name='.$i[1].$i[2].'"><br><img style="width:100;height:auto;" src="'.$i[3].'"></a></div></a>';  
     }
 
-	$user = mysqli_query($con,"SELECT id, ime, priimek FROM users WHERE email='$username' LIMIT 1") or die(mysqli_error($con). " errorcic ");
+
+			}}
+	$user = mysqli_query($con,"SELECT id, ime, priimek, profile_picture FROM users WHERE email='$username' LIMIT 1") or die(mysqli_error($con). " errorcic ");
 	$i = mysqli_fetch_array($user, MYSQLI_ASSOC);
 	mysqli_close($con);
 
@@ -81,9 +105,9 @@
 			echo '</div>
 			<div class="col-lg-4 right-container">
 				<div class="side-post-div-header">
-					<img class="post-user-icon-lg"src="images/femaleIcon.png" alt="user-profile-img">
+					<img class="post-user-icon-lg"src="'.$i["profile_picture"].'" alt="user-profile-img">
 					<div class="side-post-div-img">
-					<a class="post-user-link" href="profile.php?id='.$i["id"].'">moj_profil</a>
+					<a class="post-user-link" href="profile.php">moj_profil</a>
 					<p class="post-user-name-top">'.$i["ime"].' '.$i["priimek"].'</p>
 				</div>
 					</div>
@@ -113,15 +137,37 @@
 					</div>
 				</div>
 			</div>';
-					?>
+		
+?>
 				</div>
 			</div>
 		</div>
-		<br><a href="logout.php" style="clear:both;">logout</a>
 	</div>
 	<a href="upload.php">
 		<img class="plus" src="images/plus.png">
 </a>
 </section>
+<?php
+$x = 3;/* 
+echo'<script type="text/javascript">
+function myFunction(var p_id) {
+
+	var x = '.likes().'
+}
+</script>';*/
+?>
 </body>
+<script type="text/javascript">
+function clipboard() {
+	var dummy = document.createElement('input'),
+    text = window.location.href;
+
+	document.body.appendChild(dummy);
+	dummy.value = text;
+	dummy.select();
+	document.execCommand('copy');
+	alert("Copied the text: " + dummy.value);
+	document.body.removeChild(dummy);
+
+}</script>
 </html>

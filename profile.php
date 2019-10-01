@@ -1,22 +1,3 @@
-<?php
-	include_once("config.php");
-	include_once("head.php");
-	if (!isset($_SESSION['user'])) {
-		header('Location: login.php');
-		exit;
-	}
-	if(isset($_GET['id'])){
-		$id = $_GET['id'];
-		include_once('database.php');
-		$result = mysqli_query($con,"SELECT email FROM users WHERE id='$id'") or die(mysqli_error($con));
-		$row = mysqli_fetch_array($result);
-		$username = $row['email'];
-	}
-	else{
-		$username = $_SESSION['user'];
-	}
-?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -31,6 +12,7 @@
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/post.css">
+	<link rel="stylesheet" type="text/css" href="css/album.css">
 
 <!-- Bootstrap scripts -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -43,12 +25,79 @@
 </head>
 
 <body>
-	<div class="container" style="margin-top: 30px">
+<?php
+	include_once("config.php");
+	include_once("head.php");
+	if (!isset($_SESSION['user'])) {
+		header('Location: login.php');
+		exit;
+	}
+	if(isset($_GET['id'])){
+		$id = $_GET['id'];
+		include_once('database.php');
+		$result = mysqli_query($con,"SELECT email FROM users WHERE id='$id'") or die(mysqli_error($con));
+		$row = mysqli_fetch_array($result);
+		$username = $row['email'];
+		$me_username = $_SESSION['user'];
+
+		$result = mysqli_query($con,"SELECT id FROM users WHERE email='$me_username' LIMIT 1") or die(mysqli_error($con));
+		$row = mysqli_fetch_array($result);
+		$u_id = $row['id'];
+
+		include_once("database.php");
+		$username = $_SESSION['user'];
+		$result = mysqli_query($con,"SELECT ime, priimek, email, profile_picture FROM users WHERE id='$id'") or die(mysqli_error($con));
+		$row = mysqli_fetch_array($result);
+		$profilepic = $row['profile_picture'];
+		
+		echo '<div class="scale60 propic floatl"><div class="clearfix">
+		<img src="'.$profilepic.'" class="float-left pull-left mr-2">
+		<p class="mrinfo">Email <b>'.$username.'</b><br>
+		Name <b>'.$row['ime'].' '.$row['priimek'].'</b><br>';
+
+		$followed_id = $id;
+		$followed = mysqli_query($con,"SELECT follower_id FROM followers WHERE followed_id='$followed_id' AND follower_id='$u_id' LIMIT 1") or die(mysqli_error($con));
+		$row = mysqli_fetch_array($followed);
+		if( $row==null ){
+		echo '<a href=follow_process.php?f_id='.$id.'&u_id='.$u_id.' class="badge badge-primary followbtn">Follow</a></div></p>';
+		}else{
+			echo '<a href=unfollow_process.php?f_id='.$id.'&u_id='.$u_id.' class="badge badge-primary followbtn">Unfollow</a></div>';
+		}
+		
+		
+		echo '</div><hr>
+		
+		</div>';
+		}
+
+	else{
+		$username = $_SESSION['user'];
+		include_once("database.php");
+		$username = $_SESSION['user'];
+		$result = mysqli_query($con,"SELECT ime, priimek, email, profile_picture, id FROM users WHERE email='$username'") or die(mysqli_error($con));
+		$row = mysqli_fetch_array($result);
+		$profilepic = $row['profile_picture'];
+		echo '<div class="scale60 propic floatl"><div class="clearfix">
+		<img src="'.$profilepic.'" class="float-left pull-left mr-2">
+		<p class="mrinfo">Email <b>'.$username.'</b><br>
+		Name <b>'.$row['ime'].' '.$row['priimek'].'</b><br>
+		<a href="info.php">Edit</a></p>
+		</div><hr>
+		
+		</div>';
+		}
+
+?>
+<div class="album py-5 bg-light" style="clear:both;">
+        <div class="container">
+
+          
+	
 	
 <?php
-	include_once("head.php");
 	
-	$result = mysqli_query($con,"SELECT p.naslov, p.slika_url, p.opis FROM users u INNER JOIN posts p ON u.id=p.user_id WHERE u.email='$username';") 
+
+	$result = mysqli_query($con,"SELECT p.naslov, p.slika_url, p.opis, p.datum FROM users u INNER JOIN posts p ON u.id=p.user_id WHERE u.email='$username';") 
 				or die(mysqli_error($con));
 
     /*if(!mysql_num_rows($result)){
@@ -59,12 +108,25 @@
 	$all = mysqli_fetch_all($result);
 	foreach($all as &$i){
         //$slika = $i[1];
-        echo "<div id='profile-post'>".$i[0]."<br><img id='post-img' src='".$i[1]."'><br>".$i[2]."</div>";
+        echo '<div class="row">
+		<div class="col-md-4">
+		  <div class="card mb-4 box-shadow">
+			<img class="card-img-top" src="'.$i[1].'" alt="Card image cap">
+			<div class="card-body">
+			  <p class="card-text"><b>'.$i[0].'</b> '.$i[2].'</p>
+			  <div class="d-flex justify-content-between align-items-center">
+				<div class="btn-group">
+				  <a href="'.$i[1].'" class="btn btn-sm btn-outline-secondary">View</a>
+				</div>
+				<small class="text-muted">'.$i[3].'</small>
+			  </div>
+			</div>
+		  </div>
+		</div>';//<div id='profile-post'>".$i[0]."<br><img id='post-img' src='".$i[1]."'><br>".$i[2]."</div>";
 	}
 	mysqli_close($con);
 ?>
-
-		<br><a href="logout.php">logout</a>
-	</div>
+</div>
+</div>
 </body>
 </html>

@@ -71,7 +71,7 @@
 
         $row = mysqli_fetch_array($result);
 
-        $def_img = "http://cdn.onlinewebfonts.com/svg/img_299586.png";
+        $def_img = "https://image.flaticon.com/icons/png/128/149/149452.png";
         if(!in_array($username, $row)){
             echo "register succesful! ".$row['email'];
             mysqli_query($con,"INSERT INTO users (ime, priimek, email, geslo, datum_r, profile_picture) Values ('$name', '$surname', '$username', '$password', '$datum', '$def_img')")

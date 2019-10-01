@@ -56,8 +56,8 @@ h3 {
   margin: 0 5rem;
 }
 .post-img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 99%;
+  max-height: 99%;
 }
 .post-div-likes{
   border: 0.7px #e6e6e6 solid;
@@ -160,3 +160,91 @@ a {
   width: 4.3%;
   height: auto;
 }
+
+.comment{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.searchc{
+  width: 80%;
+}
+
+.by{
+  float: right;
+  clear: both;
+}
+.by img{
+  width: 20px;
+  height: auto;
+}
+
+.date{
+  font-family: "Roboto";
+  font-weight: 100;
+  font-size: 0.7rem;
+}
+
+.floatr{
+  float:right;
+  clear:both;
+}
+
+.scale80{
+  width:80% !important;
+}
+
+.scale60{
+  width:60% !important;
+}
+.scale40{
+  width:40% !important;
+}
+
+.posc{
+  margin: auto;
+  margin-top: 15px;
+}
+.file-field.medium .file-path-wrapper {
+  height: 3rem; }
+  .file-field.medium .file-path-wrapper .file-path {
+  height: 2.8rem; }
+  
+  .file-field.big-2 .file-path-wrapper {
+  height: 3.7rem; }
+  .file-field.big-2 .file-path-wrapper .file-path {
+  height: 3.5rem; }
+
+  .mbut{
+    margin-left: 20%;
+    margin-top: 30px;
+    width: 10%;
+  }
+
+  .discoverimg{
+    height: 25px;
+    width: auto;
+  }
+  .followbtn{
+    vertical-align: middle;
+  }
+  .propic{
+    margin-left: 20%;
+    margin-top: 30px;
+  }
+  .propic img{
+    width:20%;
+    height: auto;
+  }
+  .floatl{
+    float:left;
+  }
+  .cb{
+    clear:both;
+  }
+  .mrinfo{
+    margin-left: 5%;
+    margin-bottom: 0px;
+  }

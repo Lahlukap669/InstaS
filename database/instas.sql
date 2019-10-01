@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gostitelj: 127.0.0.1
--- Čas nastanka: 18. sep 2019 ob 09.48
+-- Čas nastanka: 02. okt 2019 ob 01.40
 -- Različica strežnika: 10.1.40-MariaDB
 -- Različica PHP: 7.1.29
 
@@ -49,6 +49,13 @@ CREATE TABLE `filters` (
   `opis` text COLLATE utf8_slovenian_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovenian_ci;
 
+--
+-- Odloži podatke za tabelo `filters`
+--
+
+INSERT INTO `filters` (`id`, `filter`, `ime`, `opis`) VALUES
+(1, 'none', 'none', 'none');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +67,13 @@ CREATE TABLE `followers` (
   `follower_id` bigint(20) UNSIGNED NOT NULL,
   `followed_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovenian_ci;
+
+--
+-- Odloži podatke za tabelo `followers`
+--
+
+INSERT INTO `followers` (`id`, `follower_id`, `followed_id`) VALUES
+(15, 4, 8);
 
 -- --------------------------------------------------------
 
@@ -75,6 +89,20 @@ CREATE TABLE `komentarji` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovenian_ci;
+
+--
+-- Odloži podatke za tabelo `komentarji`
+--
+
+INSERT INTO `komentarji` (`id`, `komentar`, `opis`, `post_id`, `user_id`, `datum`) VALUES
+(1, 'ful kul', '/', 1, 8, '2019-09-30 20:46:47'),
+(11, 'wd', '', 1, 8, '2019-10-01 10:52:33'),
+(10, 'neki pa je', '', 1, 8, '2019-10-01 10:51:58'),
+(9, 'lolololol', '', 1, 8, '2019-10-01 10:50:31'),
+(8, 'hahahaha', '', 1, 8, '2019-10-01 10:44:36'),
+(12, 'hahaha', '', 1, 8, '2019-10-01 11:01:33'),
+(13, 'ne pa ne', '', 1, 8, '2019-10-01 11:02:19'),
+(14, 'neki hahaahah', '', 1, 8, '2019-10-01 18:53:27');
 
 -- --------------------------------------------------------
 
@@ -104,6 +132,13 @@ CREATE TABLE `posts` (
   `datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovenian_ci;
 
+--
+-- Odloži podatke za tabelo `posts`
+--
+
+INSERT INTO `posts` (`id`, `filter_id`, `naslov`, `opis`, `slika_url`, `user_id`, `datum`) VALUES
+(1, 1, 'neki', 'lol', 'uploads/2019-09-24_13_19_56_logo-title.png', 4, '2019-09-26 16:53:10');
+
 -- --------------------------------------------------------
 
 --
@@ -127,7 +162,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `google_auth_id`, `email`, `ime`, `priimek`, `datum_r`, `geslo`, `opis`, `profile_picture`) VALUES
-(8, NULL, 'luka11.lah@gmail.com', 'Luka', 'Lah', '2001-04-21', 'edf46ae9122b1a247e127ef26c2e1af0d29cb42b', NULL, NULL),
+(8, NULL, 'luka11.lah@gmail.com', 'Luka', 'Lah', '2001-04-21', 'edf46ae9122b1a247e127ef26c2e1af0d29cb42b', NULL, 'https://image.flaticon.com/icons/png/128/149/149452.png'),
 (4, '105911729496609897693', 'luka1.lah@gmail.com', 'Luka', 'Lah', '0000-00-00', NULL, NULL, 'https://lh4.googleusercontent.com/-FMlF6AKsUTg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfj80YtkR8cTJcsXEpbPfeM1BGvTA/photo.jpg');
 
 --
@@ -207,19 +242,19 @@ ALTER TABLE `chat`
 -- AUTO_INCREMENT tabele `filters`
 --
 ALTER TABLE `filters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT tabele `followers`
 --
 ALTER TABLE `followers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT tabele `komentarji`
 --
 ALTER TABLE `komentarji`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT tabele `lajki`
@@ -231,13 +266,13 @@ ALTER TABLE `lajki`
 -- AUTO_INCREMENT tabele `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT tabele `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -7,7 +7,9 @@
 	}
 	if(isset($_GET['p_id'])){
         $p_id = $_GET['p_id'];
+        $_SESSION['p_id'] = $p_id;
         $u_id = $_GET['u_id'];
+        $_SESSION['user_post'] = $u_id;
 		include_once('database.php');
 		$result = mysqli_query($con,"SELECT email FROM users WHERE id='$u_id'") or die(mysqli_error($con));
 		$row = mysqli_fetch_array($result);
@@ -16,7 +18,7 @@
 	else{
         header("index.php");
         exit();
-	}
+    }
 ?>
 
 <!doctype html>
@@ -75,14 +77,26 @@
 						<a href="#" class="bookmark buttons"><i class="far fa-bookmark button"></i></a>
 				</div>
         </div>';
+        echo '<div class="main-post-div"><form id="searchForm" action="comment_post.php" method="post" class="form-inline searchc">
+                    <input class="form-control mr-sm-2" type="search" id="searchc" name="searchc" placeholder="comment" aria-label="Search">
+                    <input class="form-control mr-sm-2" type="submit" id="searchc" name="Comment" value="Comment">
+                </form></div>';
+        
+        $result = mysqli_query($con,"SELECT k.komentar, u.ime, u.priimek, u.profile_picture, k.datum FROM users u 
+                                                    INNER JOIN komentarji k ON u.id=k.user_id
+                                                    INNER JOIN posts p ON p.id=k.post_id
+                                                    ORDER BY k.datum DESC;") 
+                                    or die(mysqli_error($con));
+                    
+                        $all = mysqli_fetch_all($result);
+                        foreach($all as &$i){
+                            //$slika = $i[1];
+                            echo "<br><div class='post-div-header-left comment'>'".$i[0]."'<span class='by'><img src='".$i[3]."'> ".$i[1]." ".$i[2]."</span><br><span class='date'>".$i[4]."</span></div>";
+                        }
         
         $user = mysqli_query($con,"SELECT id, ime, priimek FROM users WHERE email='$username' LIMIT 1") or die(mysqli_error($con). " errorcic ");
-        $i = mysqli_fetch_array($user, MYSQLI_ASSOC);
-    
-            /*<!-- <div class="post-div-header-right">
-                                <a style="display: inline-block;"href="#">Imagine</a>
-                        </div> -->		*/
-                    
+        $i = mysqli_fetch_array($user, MYSQLI_ASSOC);                        
+                                        
                 echo '</div>
                 <div class="col-lg-4 right-container">
                     <div class="side-post-div-header">
@@ -118,25 +132,12 @@
                         </div>
                     </div>
                 </div>';
-                        ?>
+                mysqli_close($con);
+?>
                     </div>
 	<div class="container" style="margin-top: 30px; clear:both;">
 	
-<?php
-	
-	$result = mysqli_query($con,"SELECT k.komentar, u.ime, u.priimek FROM users u 
-                                INNER JOIN komentarji k ON u.id=k.user_id
-                                INNER JOIN posts p ON p.id=k.post_id
-                                ORDER BY k.datum DESC;") 
-				or die(mysqli_error($con));
 
-	$all = mysqli_fetch_all($result);
-	foreach($all as &$i){
-        //$slika = $i[1];
-        echo "<br><div class='main-post-div' id='profile-post'>'".$i[0]."' by ".$i[1]." ".$i[2]."</div>";
-	}
-	mysqli_close($con);
-?>
 
             </div>
 		</div>

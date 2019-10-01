@@ -1,9 +1,11 @@
 <html>
     <head>
+    <link rel="shortcut icon" type="image/png" href="images/logo-title.png"/>
 <!-- <link rel="stylesheet" type="text/css" href="css/head.css"> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="css/head.css">
+        <link rel="stylesheet" href="css/post.css">
 <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800|Roboto:100,400,900|Satisfy&display=swap" rel="stylesheet">
     </head>

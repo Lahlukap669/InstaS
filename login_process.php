@@ -26,7 +26,13 @@
         $_SESSION['user'] = $username;
         $_SESSION['id'] = $row['id'];
         $_SESSION['user-name'] = $row['ime'];
-        $_SESSION['user-surname'] = $row['priimek'];+
+        $_SESSION['user-surname'] = $row['priimek'];
+
+        $_SESSION['email'] = $username;;
+        $_SESSION['picture'] = $row['profile_picture'];
+        $_SESSION['familyName'] = $row['priimek'];
+        $_SESSION['givenName'] = $row['ime'];
+        $_SESSION['date'] = $row['datum_r'];
         //echo "<br>".$_SESSION['user'];
         header('Location: index.php');
         $_SESSION['error'] = "";
