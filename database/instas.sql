@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gostitelj: 127.0.0.1
--- Čas nastanka: 02. okt 2019 ob 01.40
+-- Čas nastanka: 02. okt 2019 ob 08.35
 -- Različica strežnika: 10.1.40-MariaDB
 -- Različica PHP: 7.1.29
 
@@ -73,7 +73,8 @@ CREATE TABLE `followers` (
 --
 
 INSERT INTO `followers` (`id`, `follower_id`, `followed_id`) VALUES
-(15, 4, 8);
+(21, 4, 8),
+(23, 8, 4);
 
 -- --------------------------------------------------------
 
@@ -115,6 +116,13 @@ CREATE TABLE `lajki` (
   `post_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovenian_ci;
+
+--
+-- Odloži podatke za tabelo `lajki`
+--
+
+INSERT INTO `lajki` (`id`, `post_id`, `user_id`) VALUES
+(10, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -248,7 +256,7 @@ ALTER TABLE `filters`
 -- AUTO_INCREMENT tabele `followers`
 --
 ALTER TABLE `followers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT tabele `komentarji`
@@ -260,7 +268,7 @@ ALTER TABLE `komentarji`
 -- AUTO_INCREMENT tabele `lajki`
 --
 ALTER TABLE `lajki`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT tabele `posts`

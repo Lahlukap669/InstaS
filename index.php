@@ -1,8 +1,4 @@
 <?php
-//LAJKI
-//all liked posts
-//CSS profile/upload/discover/info/search/edit
-//spremenit slike
 
 	 include_once("config.php");
 	 include_once("head.php");
@@ -69,21 +65,25 @@
 	
     foreach($all as &$i){
 		$f_id = $i[5];
+		$p_id = $i[4];
 		$followed = mysqli_query($con,"SELECT followed_id FROM followers WHERE followed_id='$f_id' AND follower_id='$id'") or die(mysqli_error($con). " errorcic ");
 		$all1 = mysqli_fetch_all($followed);
 		foreach($all1 as &$a){
-			echo $a[0]." ".$i[5];
 			if($a[0]==$i[5]){
 				echo '<div class="main-post-div">
 				<div class="post-div-header-left">
-					<img  class="post-user-icon"src="'.$i[0].'" alt="user-picture">
+					<img  class="post-user-icon" src="'.$i[0].'" alt="user-picture">
 					<a class="post-user-link" href="profile.php?id='.$i[4].'">'.$i[1]." ".$i[2].'</a>	
 				</div>
 				<div class="post-div-img">
 					<a href="post.php?id='.$i[4].'&name='.$i[1].$i[2].'"><img class="post-img" src="'.$i[3].'"></a>
 				</div>
 				<div class="post-div-likes">
-						<a id="like" href="" onclick="like_process.php?p_id='.$i[4].'" class="buttons a_bl"><i class="far fa-heart button"></i></a>
+						<a id="like" href="like_process.php?p_id='.$i[4].'" class="buttons a_bl"><i class="far fa-heart button"></i></a>';
+						$likes = mysqli_query($con,"SELECT COUNT(id) as counted FROM lajki WHERE user_id='$id' AND post_id='$p_id' LIMIT 1") or die(mysqli_error($con). " errorcic ");
+						$likenum = mysqli_fetch_array($likes, MYSQLI_ASSOC);
+						$numl = $likenum["counted"];
+						echo '<a id="numOfLikes" class="buttons">'.$numl.'</a>
 						<a href="comments.php?p_id='.$i[4].'&u_id='.$i[5].'" class="buttons"><i class="far fa-comment button"></i></a>
 						<a id="share" href="" onclick="clipboard();" class="buttons"><i class="far fa-share-square button"></i></a>
 						<a href="" class="bookmark buttons"><i class="far fa-bookmark button"></i></a>

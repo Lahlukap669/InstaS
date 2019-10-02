@@ -10,14 +10,18 @@
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $u_id = $row["id"];
 
-        $result = mysqli_query($con,"SELECT id FROM lajki WHERE user_id='$u_id' AND post_id='$f_id' LIMIT 1")
+        $result = mysqli_query($con,"SELECT id FROM lajki WHERE user_id='$u_id' AND post_id='$p_id' LIMIT 1")
                             or die("failed to query database"); 
-                            $row = mysqli_fetch_array($result);
+        $row = mysqli_fetch_array($result);
         if($row == null){
-        mysqli_query($con,"INSERT INTO lajki (user_id, post_id) Values ('$u_id', '$f_id')")
+
+        mysqli_query($con,"INSERT INTO lajki (user_id, post_id) Values ('$u_id', '$p_id')")
                             or die("failed to query database"); 
         
-        }                   
+        }else{
+            mysqli_query($con,"DELETE FROM lajki WHERE user_id='$u_id' AND post_id='$p_id';")
+                            or die("failed to query database"); 
+        }                 
         header("Location: index.php");
         exit();
         mysqli_close($con);

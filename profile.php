@@ -49,6 +49,7 @@
 		$result = mysqli_query($con,"SELECT ime, priimek, email, profile_picture FROM users WHERE id='$id'") or die(mysqli_error($con));
 		$row = mysqli_fetch_array($result);
 		$profilepic = $row['profile_picture'];
+		$username = $row['email'];
 		
 		echo '<div class="scale60 propic floatl"><div class="clearfix">
 		<img src="'.$profilepic.'" class="float-left pull-left mr-2">
@@ -71,7 +72,6 @@
 		}
 
 	else{
-		$username = $_SESSION['user'];
 		include_once("database.php");
 		$username = $_SESSION['user'];
 		$result = mysqli_query($con,"SELECT ime, priimek, email, profile_picture, id FROM users WHERE email='$username'") or die(mysqli_error($con));
