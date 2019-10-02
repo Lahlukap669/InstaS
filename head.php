@@ -33,7 +33,7 @@
 									<a class="nav-link" href="./discover.php"><i class="far fa-compass navbar-icon button"></i></a>
 							</li>
 							<li class="nav-item">
-									<a class="nav-link" href="#"><i class="far fa-heart navbar-icon button"></i></a>
+									<a class="nav-link" href="./liked.php"><i class="far fa-heart navbar-icon button"></i></a>
 							</li>
 							<li class="nav-item">
 									<a class="nav-link" href="./profile.php"><i class="far fa-user navbar-icon button"></i></a>
