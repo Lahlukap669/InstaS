@@ -77,6 +77,7 @@
 		$result = mysqli_query($con,"SELECT ime, priimek, email, profile_picture, id FROM users WHERE email='$username'") or die(mysqli_error($con));
 		$row = mysqli_fetch_array($result);
 		$profilepic = $row['profile_picture'];
+		$id = $row['id'];
 		echo '<div class="scale60 propic floatl"><div class="clearfix">
 		<img src="'.$profilepic.'" class="float-left pull-left mr-2">
 		<p class="mrinfo">Email <b>'.$username.'</b><br>
@@ -97,7 +98,7 @@
 <?php
 	
 
-	$result = mysqli_query($con,"SELECT p.naslov, p.slika_url, p.opis, p.datum FROM users u INNER JOIN posts p ON u.id=p.user_id WHERE u.email='$username';") 
+	$result = mysqli_query($con,"SELECT p.naslov, p.slika_url, p.opis, p.datum, p.id FROM users u INNER JOIN posts p ON u.id=p.user_id WHERE u.email='$username';") 
 				or die(mysqli_error($con));
 
     /*if(!mysql_num_rows($result)){
@@ -106,20 +107,42 @@
     //$_SESSION['error'] = mysqli_error($con);
 
 	$all = mysqli_fetch_all($result);
+
 	foreach($all as &$i){
-        //$slika = $i[1];
-        echo '<div class="row">
+		//$slika = $i[1];
+		echo '<div class="row">
 		<div class="col-md-4">
 		  <div class="card mb-4 box-shadow">
-			<img class="card-img-top" src="'.$i[1].'" alt="Card image cap">
+			<a href="comments.php?p_id='.$i[4].'&u_id='.$id.'"><img class="card-img-top" src="'.$i[1].'" alt="Card image cap"></a>
 			<div class="card-body">
 			  <p class="card-text"><b>'.$i[0].'</b> '.$i[2].'</p>
 			  <div class="d-flex justify-content-between align-items-center">
 				<div class="btn-group">
 				  <a href="'.$i[1].'" class="btn btn-sm btn-outline-secondary">View</a>
-				</div>
-				<small class="text-muted">'.$i[3].'</small>
-			  </div>
+				</div>';
+		$cur = time();
+		$date = strtotime($i[3]);
+		$min = round(abs($date - $cur) / 60);
+		$ext = 'min';
+		if($min>59){
+			$min = round($min/60);
+			$ext = 'h';
+			if($min>23){
+                $min = round($min/24);
+                $ext = 'days';
+                if($min==1)
+                {$ext = 'day';}
+				if($min>6){
+					$min = round($min/7);
+                    $ext = 'weeks';
+                    if($min==1)
+                    {$ext = 'week';}}
+			}			
+		}
+		//$min = $since_start->i;
+		//$date = date ("d-m-Y H:i", strtotime($i[3]));
+		echo '<small class="text-muted">'.$min.' '.$ext.' ago</small>
+		</div>
 			</div>
 		  </div>
 		</div>';//<div id='profile-post'>".$i[0]."<br><img id='post-img' src='".$i[1]."'><br>".$i[2]."</div>";

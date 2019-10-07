@@ -5,16 +5,13 @@ $title = $_POST['title'];
 $des = $_POST['des'];
 $username = $_SESSION['user'];
 $now = date("Y-m-d")."_".date("H:i:s")."_";
-$target_dir = "./uploads/";
+$target_dir = "uploads/";
 $slika = $target_dir.$now.$_FILES["fileToUpload"]["name"];
 
 $result = mysqli_query($con,"SELECT id FROM users WHERE email='$username';")
                 or die(mysqli_error($con));
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $id = $row["id"];
-
-$result = mysqli_query($con,"INSERT INTO posts (filter_id, naslov, opis, slika_url, user_id) VALUES (1, '$title', '$des', '$slika', $id)")
-                or die(mysqli_error($con));
 
     /*if(!mysql_num_rows($result)){
         $message = "your email isn't registerd yet!";
@@ -42,7 +39,7 @@ if (file_exists($target_file)) {
     $uploadOk = 0;
 }
 // Check file size
-if ($_FILES["fileToUpload"]["size"] > 500000) {
+if ($_FILES["fileToUpload"]["size"] > 1000000) {
     echo "Sorry, your file is too large.";
     $uploadOk = 0;
 }
@@ -59,6 +56,9 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        $result = mysqli_query($con,"INSERT INTO posts (filter_id, naslov, opis, slika_url, user_id) VALUES (1, '$title', '$des', '$slika', $id)")
+                or die(mysqli_error($con));
+        mmysqli_close($con);
         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
         header("Location: index.php");
         exit;

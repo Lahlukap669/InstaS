@@ -78,9 +78,16 @@
 				<div class="post-div-img">
 					<a href="post.php?id='.$i[4].'&name='.$i[1].$i[2].'"><img class="post-img" src="'.$i[3].'"></a>
 				</div>
-				<div class="post-div-likes">
-						<a id="like" href="like_process.php?p_id='.$i[4].'" class="buttons a_bl"><i class="far fa-heart button"></i></a>';
-						$likes = mysqli_query($con,"SELECT COUNT(id) as counted FROM lajki WHERE user_id='$id' AND post_id='$p_id' LIMIT 1") or die(mysqli_error($con). " errorcic ");
+				<div class="post-div-likes">';
+				$likes = mysqli_query($con,"SELECT COUNT(id) as counted FROM lajki WHERE user_id='$id' AND post_id='$p_id' LIMIT 1") or die(mysqli_error($con). " errorcic ");
+				$likenum = mysqli_fetch_array($likes, MYSQLI_ASSOC);
+						if($likenum["counted"]==1){
+							echo '<a id="like" href="like_process.php?p_id='.$i[4].'" class="buttons a_bl"><i class="fas fa-heart button"></i></a>';
+						}
+						else{
+							echo '<a id="like" href="like_process.php?p_id='.$i[4].'" class="buttons a_bl"><i class="far fa-heart button"></i></a>';
+						}
+						$likes = mysqli_query($con,"SELECT COUNT(id) as counted FROM lajki WHERE post_id='$p_id' LIMIT 1") or die(mysqli_error($con). " errorcic ");
 						$likenum = mysqli_fetch_array($likes, MYSQLI_ASSOC);
 						$numl = $likenum["counted"];
 						echo '<a id="numOfLikes" class="buttons">'.$numl.'</a>
@@ -147,15 +154,7 @@
 		<img class="plus" src="images/plus.png">
 </a>
 </section>
-<?php
-$x = 3;/* 
-echo'<script type="text/javascript">
-function myFunction(var p_id) {
 
-	var x = '.likes().'
-}
-</script>';*/
-?>
 </body>
 <script type="text/javascript">
 function clipboard() {

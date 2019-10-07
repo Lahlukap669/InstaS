@@ -56,23 +56,42 @@
 <?php
 	
     $id = $row["id"];
-	$result = mysqli_query($con,"SELECT p.naslov, p.slika_url, p.opis, p.datum FROM posts p INNER JOIN lajki l ON p.id=l.post_id WHERE l.user_id='$id';") 
+	$result = mysqli_query($con,"SELECT p.naslov, p.slika_url, p.opis, p.datum, p.id FROM posts p INNER JOIN lajki l ON p.id=l.post_id WHERE l.user_id='$id';") 
 				or die(mysqli_error($con));
 
 	$all = mysqli_fetch_all($result);
 	foreach($all as &$i){
-        //$slika = $i[1];
+		//$slika = $i[1];
+		$cur = time();
+		$date = strtotime($i[3]);
+		$min = round(abs($date - $cur) / 60);
+		$ext = 'min';
+		if($min>59){
+			$min = round($min/60);
+			$ext = 'h';
+			if($min>23){
+                $min = round($min/24);
+                $ext = 'days';
+                if($min==1)
+                {$ext = 'day';}
+				if($min>6){
+					$min = round($min/7);
+                    $ext = 'weeks';
+                    if($min==1)
+                    {$ext = 'week';}}
+			}			
+		}
         echo '<div class="row">
 		<div class="col-md-4">
 		  <div class="card mb-4 box-shadow">
-			<img class="card-img-top" src="'.$i[1].'" alt="Card image cap">
+		  <img class="card-img-top" src="'.$i[1].'" alt="Card image cap">
 			<div class="card-body">
 			  <p class="card-text"><b>'.$i[0].'</b> '.$i[2].'</p>
 			  <div class="d-flex justify-content-between align-items-center">
 				<div class="btn-group">
 				  <a href="'.$i[1].'" class="btn btn-sm btn-outline-secondary">View</a>
 				</div>
-				<small class="text-muted">'.$i[3].'</small>
+				<small class="text-muted">'.$min." ".$ext.'</small>
 			  </div>
 			</div>
 		  </div>

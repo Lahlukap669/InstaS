@@ -13,7 +13,11 @@
 		include_once('database.php');
 		$result = mysqli_query($con,"SELECT email FROM users WHERE id='$u_id'") or die(mysqli_error($con));
 		$row = mysqli_fetch_array($result);
-		$username = $row['email'];
+        $username = $row['email'];
+        $me_username = $_SESSION['user'];
+        $result = mysqli_query($con,"SELECT id FROM users WHERE email='$me_username'") or die(mysqli_error($con));
+		$row = mysqli_fetch_array($result);
+		$me_id = $row['id'];
 	}
 	else{
         header("index.php");
@@ -70,10 +74,22 @@
 				<div class="post-div-img">
 					<a href="post.php?id='.$i[4].'&name='.$i[1].$i[2].'"><img class="post-img" src="'.$i[3].'"></a>
 				</div>
-				<div class="post-div-likes">
+                <div class="post-div-likes">';
+                $likes = mysqli_query($con,"SELECT COUNT(id) as counted FROM lajki WHERE user_id='$me_id' AND post_id='$p_id' LIMIT 1") or die(mysqli_error($con). " errorcic ");
+				$likenum = mysqli_fetch_array($likes, MYSQLI_ASSOC);
+						if($likenum["counted"]==1){
+							echo '<a id="like" href="like_process.php?p_id='.$i[4].'" class="buttons a_bl"><i class="fas fa-heart button"></i></a>';
+						}
+						else{
+							echo '<a id="like" href="like_process.php?p_id='.$i[4].'" class="buttons a_bl"><i class="far fa-heart button"></i></a>';
+						}
+						$likes = mysqli_query($con,"SELECT COUNT(id) as counted FROM lajki WHERE post_id='$p_id' LIMIT 1") or die(mysqli_error($con). " errorcic ");
+						$likenum = mysqli_fetch_array($likes, MYSQLI_ASSOC);
+						$numl = $likenum["counted"];
+						echo '<a id="numOfLikes" class="buttons">'.$numl.'</a>
 						<a href="like_process.php" class="buttons a_bl"><i class="far fa-heart button"></i></a>
 						<a href="comments.php?p_id='.$i[4].'&u_id='.$i[5].'" class="buttons"><i class="far fa-comment button"></i></a>
-						<a href="#" class="buttons"><i class="far fa-share-square button"></i></a>
+						<a id="share" href="" onclick="clipboard();" class="buttons"><i class="far fa-share-square button"></i></a>
 						<a href="#" class="bookmark buttons"><i class="far fa-bookmark button"></i></a>
 				</div>
         </div>';
@@ -90,8 +106,27 @@
                     
                         $all = mysqli_fetch_all($result);
                         foreach($all as &$i){
-                            //$slika = $i[1];
-                            echo "<br><div class='post-div-header-left comment'>'".$i[0]."'<span class='by'><img src='".$i[3]."'> ".$i[1]." ".$i[2]."</span><br><span class='date'>".$i[4]."</span></div>";
+                            $cur = time();
+		$date = strtotime($i[4]);
+		$min = round(abs($date - $cur) / 60);
+		$ext = 'min';
+		if($min>59){
+			$min = round($min/60);
+			$ext = 'h';
+			if($min>23){
+                $min = round($min/24);
+                $ext = 'days';
+                if($min==1)
+                {$ext = 'day';}
+				if($min>6){
+					$min = round($min/7);
+                    $ext = 'weeks';
+                    if($min==1)
+                    {$ext = 'week';}}
+			}			
+		}
+                            //$date = date ("d-m-Y H:i", strtotime($i[4]));
+                            echo "<br><div class='post-div-header-left comment'>'".$i[0]."'<span class='by'><img src='".$i[3]."'> ".$i[1]." ".$i[2]."</span><br><span class='date'>".$min." ".$ext." ago</span></div>";
                         }
         
         $user = mysqli_query($con,"SELECT id, ime, priimek FROM users WHERE email='$username' LIMIT 1") or die(mysqli_error($con). " errorcic ");
@@ -145,4 +180,17 @@
 	</div>
 </section>
 </body>
+<script type="text/javascript">
+function clipboard() {
+	var dummy = document.createElement('input'),
+    text = window.location.href;
+
+	document.body.appendChild(dummy);
+	dummy.value = text;
+	dummy.select();
+	document.execCommand('copy');
+	alert("Copied the text: " + dummy.value);
+	document.body.removeChild(dummy);
+
+}</script>
 </html>

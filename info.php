@@ -43,7 +43,7 @@
 					</tr>
 					<tr>
 						<td>Date of birth</td>
-						<td><?php if(isset($_SESSION['date'])){ echo $_SESSION['date'];} ?></td>
+						<td><?php if(isset($_SESSION['date'])){ $date = date ("d-m-Y", strtotime($_SESSION['date'])); echo $date;} ?></td>
 					</tr>
 
 				</tbody>
