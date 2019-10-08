@@ -69,7 +69,7 @@
     echo '<div class="main-post-div">
 				<div class="post-div-header-left">
 					<img  class="post-user-icon"src="'.$i[0].'" alt="user-picture">
-					<a class="post-user-link" href="profile.php?id='.$i[4].'">'.$i[1]." ".$i[2].'</a>	
+					<a class="post-user-link" href="profile.php?id='.$i[5].'">'.$i[1]." ".$i[2].'</a>	
 				</div>
 				<div class="post-div-img">
 					<a href="post.php?id='.$i[4].'&name='.$i[1].$i[2].'"><img class="post-img" src="'.$i[3].'"></a>
@@ -100,7 +100,9 @@
         $result = mysqli_query($con,"SELECT k.komentar, u.ime, u.priimek, u.profile_picture, k.datum FROM users u 
                                                     INNER JOIN komentarji k ON u.id=k.user_id
                                                     INNER JOIN posts p ON p.id=k.post_id
-                                                    ORDER BY k.datum DESC;") 
+                                                    where p.id='$p_id'
+                                                    ORDER BY k.datum DESC
+                                                    ;") 
                                     or die(mysqli_error($con));
                     
                         $all = mysqli_fetch_all($result);
@@ -127,16 +129,16 @@
                             //$date = date ("d-m-Y H:i", strtotime($i[4]));
                             echo "<br><div class='post-div-header-left comment'>'".$i[0]."'<span class='by'><img src='".$i[3]."'> ".$i[1]." ".$i[2]."</span><br><span class='date'>".$min." ".$ext." ago</span></div>";
                         }
-        
-        $user = mysqli_query($con,"SELECT id, ime, priimek FROM users WHERE email='$username' LIMIT 1") or die(mysqli_error($con). " errorcic ");
+        $username = $_SESSION['user'];
+        $user = mysqli_query($con,"SELECT id, ime, priimek, profile_picture FROM users WHERE email='$username' LIMIT 1") or die(mysqli_error($con). " errorcic ");
         $i = mysqli_fetch_array($user, MYSQLI_ASSOC);                        
                                         
                 echo '</div>
                 <div class="col-lg-4 right-container">
                     <div class="side-post-div-header">
-                        <img class="post-user-icon-lg"src="images/femaleIcon.png" alt="user-profile-img">
+                        <img class="post-user-icon-lg"src="'.$i["profile_picture"].'" alt="user-profile-img">
                         <div class="side-post-div-img">
-                        <a class="post-user-link" href="profile.php?id='.$i["id"].'">moj_profil</a>
+                        <a class="post-user-link" href="profile.php">moj_profil</a>
                         <p class="post-user-name-top">'.$i["ime"].' '.$i["priimek"].'</p>
                     </div>
                         </div>
@@ -145,29 +147,49 @@
                                 <h3>Stories</h3>
                             </div>
     
-                            <div style="padding-bottom: 1rem;">
-                                <a class="" href="index.php"><img class="post-user-icon" src="images/uniIcon.png" alt="user-profile-img"></a>
-                                <div class="side-post-div-img">
-                                <a class="post-user-link-right-bottom" href="index.php">profil_1</a>
-                                <p class="story-upload-time">10 hours ago</p>
-                            </div>
-                            <div class="">
-                                <a class="" href="index.php"><img class="post-user-icon" src="images/uniIcon.png" alt="user-profile-img"></a>
-                                <div class="side-post-div-img">
-                                <a class="post-user-link-right-bottom" href="index.php">profil_2</a>
-                                <p class="story-upload-time">17 hours ago</p>
-                            </div>
-                            <div class="">
-                                <a class="" href="index.php"><img class="post-user-icon" src="images/uniIcon.png" alt="user-profile-img"></a>
-                                <div class="side-post-div-img">
-                                <a class="post-user-link-right-bottom" href="index.php">profil_3</a>
-                                <p class="story-upload-time">20 hours ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>';
-                mysqli_close($con);
-?>
+                            ';
+
+			$story = mysqli_query($con,"SELECT u.id, u.ime, u.priimek, s.story_url, s.datum FROM users u INNER JOIN stories s ON u.id=s.user_id WHERE 
+										s.datum > DATE_SUB(NOW(), INTERVAL 24 HOUR)") or die(mysqli_error($con). " errorcic ");
+			$all = mysqli_fetch_all($story);
+			
+			foreach($all as &$i){
+				$cur = time();
+		$date = strtotime($i[4]);
+		$min = round(abs($date - $cur) / 60);
+		$ext = 'min';
+		if($min>59){
+			$min = round($min/60);
+			$ext = 'h';
+			if($min>23){
+                $min = round($min/24);
+                $ext = 'days';
+                if($min==1)
+                {$ext = 'day';}
+				if($min>6){
+					$min = round($min/7);
+                    $ext = 'weeks';
+                    if($min==1)
+                    {$ext = 'week';}}
+			}			
+		}
+						
+						echo '<div style="padding-bottom: 1rem;">
+							<img id="myImg" onclick="openModal(`'.$i[3].'`);" class="post-user-icon" src="'.$i[3].'" alt="user-profile-img">
+							<div class="side-post-div-img">
+							<div><a class="post-user-link-right-bottom" href="profile.php?id='.$i[0].'">'.$i[1].' '.$i[2].'</a></div>
+                            <p class="story-upload-time">'.$min.' '.$ext.' ago</p>
+                            
+                            <div id="myModal" class="modal"><span class="close">&times;</span><img class="modal-content" id="img01"><div id="caption"></div></div>
+
+						</div>';}
+						
+					echo '</div>
+				</div>
+			</div>';
+		
+
+			mysqli_close($con);?>
                     </div>
 	<div class="container" style="margin-top: 30px; clear:both;">
 	
@@ -191,5 +213,18 @@ function clipboard() {
 	alert("Copied the text: " + dummy.value);
 	document.body.removeChild(dummy);
 
-}</script>
+}
+var modal = document.getElementById("myModal");
+function openModal(img_link){
+	var modalImg = document.getElementById("img01");
+	var captionText = document.getElementById("caption");
+
+	modal.style.display = "block";
+	modalImg.src = img_link;
+
+	var span = document.getElementsByClassName("close")[0];
+
+	span.onclick = function() {
+	modal.style.display = "none";
+	}}</script>
 </html>

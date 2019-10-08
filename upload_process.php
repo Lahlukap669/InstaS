@@ -67,4 +67,7 @@ if ($uploadOk == 0) {
         echo "<a href='upload.php'>Back</a>";
     }
 }
+header("Location: index.php");
+        exit;
+//moje stvari
 ?>

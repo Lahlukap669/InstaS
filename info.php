@@ -1,10 +1,15 @@
 <?php
 	include_once("config.php");
+	include_once("database.php");
 	/*if (!isset($_SESSION['user'])) {
 		header('Location: login.php');
 		exit();
 	}*/
-?>
+	$username = $_SESSION['user'];
+	$story = mysqli_query($con,"SELECT profile_picture from users where email='$username' LIMIT 1") or die(mysqli_error($con). " errorcic ");
+	$a = mysqli_fetch_array($story, MYSQLI_ASSOC);
+	$_SESSION['picture'] = $a["profile_picture"];
+	?>
 <!doctype html>
 <html lang="en">
 <head>

@@ -86,10 +86,13 @@
 		  <div class="card mb-4 box-shadow">
 		  <img class="card-img-top" src="'.$i[1].'" alt="Card image cap">
 			<div class="card-body">
-			  <p class="card-text"><b>'.$i[0].'</b> '.$i[2].'</p>
+			  <p class="card-text opis"><b>'.$i[0].'</b> '.$i[2].'</p>
 			  <div class="d-flex justify-content-between align-items-center">
 				<div class="btn-group">
-				  <a href="'.$i[1].'" class="btn btn-sm btn-outline-secondary">View</a>
+				<span onclick="openModal(`'.$i[1].'`);" class="btn btn-sm btn-outline-secondary">View</span>
+
+				<div id="myModal" class="modal"><span class="close">&times;</span><img class="modal-content" id="img01"><div id="caption"></div></div>
+
 				</div>
 				<small class="text-muted">'.$min." ".$ext.' ago</small>
 			  </div>
@@ -101,5 +104,26 @@
 ?>
 </div>
 </div>
+<script>
+var modal = document.getElementById("myModal");	
+function openModal(img_link){
+	var modalImg = document.getElementById("img01");
+	var captionText = document.getElementById("caption");
+
+	modal.style.display = "block";
+	modalImg.src = img_link;
+
+	var span = document.getElementsByClassName("close")[0];
+
+	span.onclick = function() {
+	modal.style.display = "none";
+	}}
+
+	$('.opis').each((i, obj) => { 
+    let string = $(obj).text();
+    let result = (string.replace(/#(\S*)/,'<a class="badge badge-info" href="hashsearch.php?hash=$1">#$1</a>'));
+    $(obj).html(result);
+});
+</script>
 </body>
 </html>

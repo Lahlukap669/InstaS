@@ -59,8 +59,8 @@
 	$post = mysqli_query($con,"SELECT DISTINCT u.profile_picture, u.ime, u.priimek, p.slika_url, p.id, u.id FROM users u
 								INNER JOIN posts p ON  u.id=p.user_id
 								LEFT OUTER JOIN lajki l ON p.id=l.post_id
-								WHERE u.email <> '$username'
 								ORDER BY p.datum DESC") or die(mysqli_error($con). " errorcic ");
+	
 	$all = mysqli_fetch_all($post);
 	
     foreach($all as &$i){
@@ -69,7 +69,7 @@
 		$followed = mysqli_query($con,"SELECT DISTINCT followed_id FROM followers WHERE followed_id='$f_id' AND follower_id='$id'") or die(mysqli_error($con). " errorcic ");
 		$all1 = mysqli_fetch_all($followed);
 		foreach($all1 as &$a){
-			if($a[0]==$i[5]){
+			if($a[0]==$i[5] || $i[5]==$id){
 				echo '<div class="main-post-div">
 				<div class="post-div-header-left">
 					<img  class="post-user-icon" src="'.$i[0].'" alt="user-picture">
@@ -123,7 +123,7 @@
 						</div>';
 
 			$story = mysqli_query($con,"SELECT u.id, u.ime, u.priimek, s.story_url, s.datum FROM users u INNER JOIN stories s ON u.id=s.user_id WHERE 
-										s.datum > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND u.email <> '$username'") or die(mysqli_error($con). " errorcic ");
+										s.datum > DATE_SUB(NOW(), INTERVAL 24 HOUR)") or die(mysqli_error($con). " errorcic ");
 			$all = mysqli_fetch_all($story);
 			
 			foreach($all as &$i){
@@ -148,10 +148,12 @@
 		}
 						
 						echo '<div style="padding-bottom: 1rem;">
-							<a href="'.$i[3].'"><img class="post-user-icon" src="'.$i[3].'" alt="user-profile-img"></a>
+							<img id="myImg" onclick="openModal(`'.$i[3].'`);" class="post-user-icon" src="'.$i[3].'" alt="user-profile-img">
 							<div class="side-post-div-img">
 							<div><a class="post-user-link-right-bottom" href="profile.php?id='.$i[0].'">'.$i[1].' '.$i[2].'</a></div>
 							<p class="story-upload-time">'.$min.' '.$ext.' ago</p>
+							
+							<div id="myModal" class="modal"><span class="close">&times;</span><img class="modal-content" id="img01"><div id="caption"></div></div>
 						</div>';}
 						
 					echo '</div>
@@ -182,5 +184,20 @@ function clipboard() {
 	alert("Copied the text: " + dummy.value);
 	document.body.removeChild(dummy);
 
-}</script>
+}
+var modal = document.getElementById("myModal");
+
+function openModal(img_link){
+	var modalImg = document.getElementById("img01");
+	var captionText = document.getElementById("caption");
+
+	modal.style.display = "block";
+	modalImg.src = img_link;
+
+	var span = document.getElementsByClassName("close")[0];
+
+	span.onclick = function() {
+	modal.style.display = "none";
+	}}
+</script>
 </html>
