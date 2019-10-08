@@ -56,7 +56,7 @@
     $row = mysqli_fetch_array($result);
 	$id = $row['id'];
 	
-	$post = mysqli_query($con,"SELECT u.profile_picture, u.ime, u.priimek, p.slika_url, p.id, u.id FROM users u
+	$post = mysqli_query($con,"SELECT DISTINCT u.profile_picture, u.ime, u.priimek, p.slika_url, p.id, u.id FROM users u
 								INNER JOIN posts p ON  u.id=p.user_id
 								LEFT OUTER JOIN lajki l ON p.id=l.post_id
 								WHERE u.email <> '$username'
@@ -66,14 +66,14 @@
     foreach($all as &$i){
 		$f_id = $i[5];
 		$p_id = $i[4];
-		$followed = mysqli_query($con,"SELECT followed_id FROM followers WHERE followed_id='$f_id' AND follower_id='$id'") or die(mysqli_error($con). " errorcic ");
+		$followed = mysqli_query($con,"SELECT DISTINCT followed_id FROM followers WHERE followed_id='$f_id' AND follower_id='$id'") or die(mysqli_error($con). " errorcic ");
 		$all1 = mysqli_fetch_all($followed);
 		foreach($all1 as &$a){
 			if($a[0]==$i[5]){
 				echo '<div class="main-post-div">
 				<div class="post-div-header-left">
 					<img  class="post-user-icon" src="'.$i[0].'" alt="user-picture">
-					<a class="post-user-link" href="profile.php?id='.$i[4].'">'.$i[1]." ".$i[2].'</a>	
+					<a class="post-user-link" href="profile.php?id='.$i[5].'">'.$i[1]." ".$i[2].'</a>	
 				</div>
 				<div class="post-div-img">
 					<a href="post.php?id='.$i[4].'&name='.$i[1].$i[2].'"><img class="post-img" src="'.$i[3].'"></a>
@@ -103,7 +103,6 @@
 			}}
 	$user = mysqli_query($con,"SELECT id, ime, priimek, profile_picture FROM users WHERE email='$username' LIMIT 1") or die(mysqli_error($con). " errorcic ");
 	$i = mysqli_fetch_array($user, MYSQLI_ASSOC);
-	mysqli_close($con);
 
 		/*<!-- <div class="post-div-header-right">
 							<a style="display: inline-block;"href="#">Imagine</a>
@@ -121,31 +120,46 @@
 					<div class="side-post-div">
 						<div>
 							<h3>Stories</h3>
-						</div>
+						</div>';
 
-						<div style="padding-bottom: 1rem;">
-							<a class="" href="index.php"><img class="post-user-icon" src="images/uniIcon.png" alt="user-profile-img"></a>
+			$story = mysqli_query($con,"SELECT u.id, u.ime, u.priimek, s.story_url, s.datum FROM users u INNER JOIN stories s ON u.id=s.user_id WHERE 
+										s.datum > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND u.email <> '$username'") or die(mysqli_error($con). " errorcic ");
+			$all = mysqli_fetch_all($story);
+			
+			foreach($all as &$i){
+				$cur = time();
+		$date = strtotime($i[4]);
+		$min = round(abs($date - $cur) / 60);
+		$ext = 'min';
+		if($min>59){
+			$min = round($min/60);
+			$ext = 'h';
+			if($min>23){
+                $min = round($min/24);
+                $ext = 'days';
+                if($min==1)
+                {$ext = 'day';}
+				if($min>6){
+					$min = round($min/7);
+                    $ext = 'weeks';
+                    if($min==1)
+                    {$ext = 'week';}}
+			}			
+		}
+						
+						echo '<div style="padding-bottom: 1rem;">
+							<a href="'.$i[3].'"><img class="post-user-icon" src="'.$i[3].'" alt="user-profile-img"></a>
 							<div class="side-post-div-img">
-							<a class="post-user-link-right-bottom" href="index.php">profil_1</a>
-							<p class="story-upload-time">10 hours ago</p>
-						</div>
-						<div class="">
-							<a class="" href="index.php"><img class="post-user-icon" src="images/uniIcon.png" alt="user-profile-img"></a>
-							<div class="side-post-div-img">
-							<a class="post-user-link-right-bottom" href="index.php">profil_2</a>
-							<p class="story-upload-time">17 hours ago</p>
-						</div>
-						<div class="">
-							<a class="" href="index.php"><img class="post-user-icon" src="images/uniIcon.png" alt="user-profile-img"></a>
-							<div class="side-post-div-img">
-							<a class="post-user-link-right-bottom" href="index.php">profil_3</a>
-							<p class="story-upload-time">20 hours ago</p>
-						</div>
-					</div>
+							<div><a class="post-user-link-right-bottom" href="profile.php?id='.$i[0].'">'.$i[1].' '.$i[2].'</a></div>
+							<p class="story-upload-time">'.$min.' '.$ext.' ago</p>
+						</div>';}
+						
+					echo '</div>
 				</div>
 			</div>';
 		
-?>
+
+			mysqli_close($con);?>
 				</div>
 			</div>
 		</div>

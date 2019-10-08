@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gostitelj: 127.0.0.1
--- Čas nastanka: 02. okt 2019 ob 08.35
+-- Čas nastanka: 08. okt 2019 ob 09.56
 -- Različica strežnika: 10.1.40-MariaDB
 -- Različica PHP: 7.1.29
 
@@ -74,7 +74,7 @@ CREATE TABLE `followers` (
 
 INSERT INTO `followers` (`id`, `follower_id`, `followed_id`) VALUES
 (21, 4, 8),
-(23, 8, 4);
+(25, 8, 4);
 
 -- --------------------------------------------------------
 
@@ -103,7 +103,8 @@ INSERT INTO `komentarji` (`id`, `komentar`, `opis`, `post_id`, `user_id`, `datum
 (8, 'hahahaha', '', 1, 8, '2019-10-01 10:44:36'),
 (12, 'hahaha', '', 1, 8, '2019-10-01 11:01:33'),
 (13, 'ne pa ne', '', 1, 8, '2019-10-01 11:02:19'),
-(14, 'neki hahaahah', '', 1, 8, '2019-10-01 18:53:27');
+(14, 'neki hahaahah', '', 1, 8, '2019-10-01 18:53:27'),
+(15, '12', '', 1, 8, '2019-10-02 08:03:01');
 
 -- --------------------------------------------------------
 
@@ -122,7 +123,10 @@ CREATE TABLE `lajki` (
 --
 
 INSERT INTO `lajki` (`id`, `post_id`, `user_id`) VALUES
-(10, 1, 8);
+(22, 0, 8),
+(18, 1, 4),
+(16, 0, 4),
+(25, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -146,6 +150,26 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`id`, `filter_id`, `naslov`, `opis`, `slika_url`, `user_id`, `datum`) VALUES
 (1, 1, 'neki', 'lol', 'uploads/2019-09-24_13_19_56_logo-title.png', 4, '2019-09-26 16:53:10');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabele `stories`
+--
+
+CREATE TABLE `stories` (
+  `id` bigint(20) NOT NULL,
+  `story_url` varchar(255) COLLATE utf8_slovenian_ci NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovenian_ci;
+
+--
+-- Odloži podatke za tabelo `stories`
+--
+
+INSERT INTO `stories` (`id`, `story_url`, `user_id`, `datum`) VALUES
+(1, 'uploads/2019-09-24_13_19_56_logo-title.png', 4, '2019-10-08 07:24:11');
 
 -- --------------------------------------------------------
 
@@ -230,6 +254,12 @@ ALTER TABLE `posts`
   ADD KEY `filter_id` (`filter_id`);
 
 --
+-- Indeksi tabele `stories`
+--
+ALTER TABLE `stories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksi tabele `users`
 --
 ALTER TABLE `users`
@@ -256,31 +286,37 @@ ALTER TABLE `filters`
 -- AUTO_INCREMENT tabele `followers`
 --
 ALTER TABLE `followers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT tabele `komentarji`
 --
 ALTER TABLE `komentarji`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT tabele `lajki`
 --
 ALTER TABLE `lajki`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT tabele `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT tabele `stories`
+--
+ALTER TABLE `stories`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT tabele `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

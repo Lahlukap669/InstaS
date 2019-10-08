@@ -91,7 +91,7 @@
 				<div class="btn-group">
 				  <a href="'.$i[1].'" class="btn btn-sm btn-outline-secondary">View</a>
 				</div>
-				<small class="text-muted">'.$min." ".$ext.'</small>
+				<small class="text-muted">'.$min." ".$ext.' ago</small>
 			  </div>
 			</div>
 		  </div>

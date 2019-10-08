@@ -87,7 +87,6 @@
 						$likenum = mysqli_fetch_array($likes, MYSQLI_ASSOC);
 						$numl = $likenum["counted"];
 						echo '<a id="numOfLikes" class="buttons">'.$numl.'</a>
-						<a href="like_process.php" class="buttons a_bl"><i class="far fa-heart button"></i></a>
 						<a href="comments.php?p_id='.$i[4].'&u_id='.$i[5].'" class="buttons"><i class="far fa-comment button"></i></a>
 						<a id="share" href="" onclick="clipboard();" class="buttons"><i class="far fa-share-square button"></i></a>
 						<a href="#" class="bookmark buttons"><i class="far fa-bookmark button"></i></a>
