@@ -8,3 +8,5 @@ Another major thing id regex with js that is used to display hashtags. The searc
 
 # DATABASE
 ![alt text](https://github.com/Lahlukap669/InstaS/blob/master/database/database.png)
+
+Database is also made for future filters on posts and messages beetwen users.
