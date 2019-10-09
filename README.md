@@ -6,3 +6,5 @@ Instagram is socialmedia site that allows users to upload posts and for other us
 
 Another major thing id regex with js that is used to display hashtags. The search for hashtags also works based on javascript regex. On profile under post description all hashtags are transformed into links and these links then search for all posts with that hashtag.
 
+# DATABASE
+![alt text](https://github.com/Lahlukap669/InstaS/blob/master/database/database.png)
