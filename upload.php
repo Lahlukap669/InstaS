@@ -40,11 +40,11 @@ include_once("head.php");
 
 <div class="input-group scale60 posc">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+    <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
   </div>
   <div class="custom-file">
-      <input type="file" class="custom-file-input" name="fileToUpload" id="fileToUpload" aria-describedby="inputGroupFileAddon01" required>
-    <label id="display" class="custom-file-label" for="fileToUpload">Choose file</label>
+      <input type="file" class="custom-file-input" name="fileToUpload1" id="fileToUpload1" aria-describedby="inputGroupFileAddon02" required>
+    <label id="display1" class="custom-file-label" for="fileToUpload">Choose file</label>
   </div>
 </div>
 
@@ -54,6 +54,9 @@ include_once("head.php");
 <script type="text/javascript">
     $('#fileToUpload').on('change',function(){
        $('#display').text($(this).val()); 
+    });
+    $('#fileToUpload1').on('change',function(){
+       $('#display1').text($(this).val()); 
     });
 
 </script>
