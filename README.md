@@ -10,3 +10,14 @@ Another major thing id regex with js that is used to display hashtags. The searc
 ![alt text](https://github.com/Lahlukap669/InstaS/blob/master/database/database.png)
 
 Database is also made for future filters on posts and messages beetwen users.
+
+# Download Project
+To run this project localy you need to install xampp. In htdocs under xampp on C:/ then paste this project. Once done you need to extract all files.
+
+You will notice that you extracted .zip file named googleAPI. So extract that file too. That file allows you to login with your google account.
+
+Then you go under localhost/phpmyadmin and add database instas and than import /database/instas.sql
+
+Now just run the whole project. Enjoy :)
+
+Author: Luka Lah -> Project is copyrighted ©
