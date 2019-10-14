@@ -49,6 +49,7 @@
 ?>
 <div class="album py-5 bg-light" style="clear:both;">
         <div class="container">
+			<div class="row">
 
           
 	
@@ -81,7 +82,7 @@
                     {$ext = 'week';}}
 			}			
 		}
-        echo '<div class="row">
+        echo '
 		<div class="col-md-4">
 		  <div class="card mb-4 box-shadow">
 		  <img class="card-img-top" src="'.$i[1].'" alt="Card image cap">
@@ -96,13 +97,14 @@
 				</div>
 				<small class="text-muted">'.$min." ".$ext.' ago</small>
 			  </div>
-			</div>
-		  </div>
+			</div></div>
+		  
 		</div>';//<div id='profile-post'>".$i[0]."<br><img id='post-img' src='".$i[1]."'><br>".$i[2]."</div>";
 	}
 	mysqli_close($con);
 ?>
-</div>
+		</div>
+	</div>
 </div>
 <script>
 var modal = document.getElementById("myModal");	
@@ -121,7 +123,7 @@ function openModal(img_link){
 
 	$('.opis').each((i, obj) => { 
     let string = $(obj).text();
-    let result = (string.replace(/#(\S*)/,'<a class="badge badge-info" href="hashsearch.php?hash=$1">#$1</a>'));
+    let result = (string.replace(/#(\S*)/g,'<a class="badge badge-info" href="hashsearch.php?hash=$1">#$1</a>'));
     $(obj).html(result);
 });
 </script>

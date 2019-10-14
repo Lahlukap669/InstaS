@@ -89,10 +89,9 @@
 		}
 
 ?>
-<div class="album py-5 bg-light" style="clear:both;">
+    <div class="album py-5 bg-light" style="clear:both;">
         <div class="container">
-
-          
+			<div class="row">     
 	
 	
 <?php
@@ -110,9 +109,9 @@
 
 	foreach($all as &$i){
 		//$slika = $i[1];
-		echo '<div class="row">
+		echo '
 		<div class="col-md-4">
-		  <div class="card mb-4 box-shadow imgs">
+		  <div class="card mb-4 box-shadow">
 			<a href="comments.php?p_id='.$i[4].'&u_id='.$id.'"><img class="card-img-top" src="'.$i[1].'" alt="Card image cap"></a>
 			<div class="card-body">
 			  <p class="card-text opis"><b>'.$i[0].'</b> '.$i[2].'</p>
@@ -147,13 +146,15 @@
 		echo '<small class="text-muted">'.$min.' '.$ext.' ago</small>
 		</div>
 			</div>
-		  </div>
-		</div>';//<div id='profile-post'>".$i[0]."<br><img id='post-img' src='".$i[1]."'><br>".$i[2]."</div>";
+		  </div></div>
+		';//<div id='profile-post'>".$i[0]."<br><img id='post-img' src='".$i[1]."'><br>".$i[2]."</div>";
 	}
 	mysqli_close($con);
 ?>
+		</div>
+	</div>
 </div>
-</div>
+
 </body>
 <script>
 var modal = document.getElementById("myModal");	
@@ -172,7 +173,7 @@ function openModal(img_link){
     
 	$('.opis').each((i, obj) => { 
     let string = $(obj).text();
-    let result = (string.replace(/#(\S*)/,'<a class="badge badge-info" href="hashsearch.php?hash=$1">#$1</a>'));
+    let result = (string.replace(/#(\S*)/g,'<a class="badge badge-info" href="hashsearch.php?hash=$1">#$1</a>'));
     $(obj).html(result);
 });
 	
